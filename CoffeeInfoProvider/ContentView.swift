@@ -61,6 +61,9 @@ struct ContentView: View {
                     CoffeeDetail(coffee: coffee)
                 }
             })
+            .toolbar {
+                EditButton()
+            }
             .navigationTitle("Coffee Info Provider")
         }
     }
@@ -121,6 +124,7 @@ struct CoffeePreview: View {
                     CoffeeRow(coffee: coffee)
                 }
             }
+            .onDelete(perform: deleteItems)
         }
     }
     
