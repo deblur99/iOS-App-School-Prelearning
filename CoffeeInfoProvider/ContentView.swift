@@ -12,20 +12,23 @@
  
  3. 정보 등록 페이지 및 기능 추가 (완료)
     - 목록 맨 위에 추가하는 거 추천
- 3-1. 정보 삭제 기능 추가
+ 3-1. 정보 삭제 기능 추가 (완료)
     - 오른쪽에서 왼쪽으로 쓸어내려서 삭제하는 기능? 그거 적용해보자
     
- 4. 검색 기능 추가
-    - 검색바 만들기
-    - 맨 위에서 위로 스크롤하면 나오는 검색바로 검색 기능 구현하면 됨
+ 4. CoffeePreview 화면에서 name, description 부분에 prefix 적용하기 (완료)
  
- 5. 즐겨찾기 기능 추가
+ 5. 검색 기능 추가
+    - 검색바 추가하기 (최상단으로 올리면 나오는 거)
+    - 검색 기능 구현하기
+        - name, description 두 가지 항목으로 탐색
+ 
+ 6. 즐겨찾기 기능 추가
     - Model에 즐겨찾기 여부 bool 변수 추가
-    - 상세정보 페이지에서 별표 아이콘 버튼 누르면 즐겨찾기
+    - preview에서 왼쪽 -> 오른쪽 쓸었을 때 즐겨찾기 버튼 노출 -> 활성화, 비활성화
+    - 즐겨찾기된 항목은 name 바로 옆에 즐겨찾기 아이콘이 뜬다.
     - 즐겨찾기한 항목이 상대적으로 위에 노출된다.
-    - 즐겨찾가 해제 기능도 추가해야 한다.
  
- 6. (시간 남으면) API 서버 만들어서 연동하기 -> 시간상 생략
+ 7. (시간 남으면) API 서버 만들어서 연동하기 -> 시간상 생략
  
  */
 
@@ -61,9 +64,6 @@ struct ContentView: View {
                     CoffeeDetail(coffee: coffee)
                 }
             })
-            .toolbar {
-                EditButton()
-            }
             .navigationTitle("Coffee Info Provider")
         }
     }
@@ -74,11 +74,12 @@ struct CoffeeRow: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(coffee.name)")
+            // .prefix()의 반환형은 SubSequence임에 유의 -> String으로 다시 형변환해야 한다.
+            Text("\(String(coffee.name.prefix(20)))")
                 .fontWeight(.bold)
         
             HStack {
-                Text("\(coffee.description)")
+                Text("\(String(coffee.description.prefix(100)))")
                     .frame(
                         maxWidth: 300,
                         alignment: .topLeading)
@@ -125,6 +126,8 @@ struct CoffeePreview: View {
                 }
             }
             .onDelete(perform: deleteItems)
+            // 이 부분을 추가하여 오른쪽 -> 왼쪽 제스처 활성화
+            // Delete를 누르면, deleteItems에 현재 인덱스가 같이 포함되어 실행되고, 그 결과 Binding으로 연동되어 있는 coffeeList에 해당 인덱스의 요소가 삭제되며 row도 삭제된다.
         }
     }
     
