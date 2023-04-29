@@ -106,9 +106,6 @@ struct CoffeeRow: View {
 struct CoffeePreview: View {
     @Binding var coffeeList: [Coffee]
     
-    // DragGesture에서 드래그 위치를 다루기 위한 State 변수
-    @State private var offset: CGSize = .zero
-    
     var body: some View {
         Section {
             NavigationLink(value: Color.blue) {
