@@ -14,6 +14,9 @@
 		61CE165329F8BFB000557510 /* CoffeeInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE165229F8BFB000557510 /* CoffeeInfoProviderTests.swift */; };
 		61CE165D29F8BFB000557510 /* CoffeeInfoProviderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE165C29F8BFB000557510 /* CoffeeInfoProviderUITests.swift */; };
 		61CE165F29F8BFB000557510 /* CoffeeInfoProviderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE165E29F8BFB000557510 /* CoffeeInfoProviderUITestsLaunchTests.swift */; };
+		61CE166C29FC0DD100557510 /* coffe-1354786__340.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 61CE166B29FC0DD000557510 /* coffe-1354786__340.jpg */; };
+		61CE166E29FC1E7400557510 /* Coffee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE166D29FC1E7400557510 /* Coffee.swift */; };
+		61CE167029FC1E8200557510 /* CoffeeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE166F29FC1E8200557510 /* CoffeeProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		61CE165829F8BFB000557510 /* CoffeeInfoProviderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeInfoProviderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61CE165C29F8BFB000557510 /* CoffeeInfoProviderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeInfoProviderUITests.swift; sourceTree = "<group>"; };
 		61CE165E29F8BFB000557510 /* CoffeeInfoProviderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeInfoProviderUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		61CE166B29FC0DD000557510 /* coffe-1354786__340.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "coffe-1354786__340.jpg"; path = "Assets.xcassets/coffe-1354786__340.jpg"; sourceTree = "<group>"; };
+		61CE166D29FC1E7400557510 /* Coffee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coffee.swift; sourceTree = "<group>"; };
+		61CE166F29FC1E8200557510 /* CoffeeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +103,10 @@
 				61CE164129F8BFAE00557510 /* CoffeeInfoProviderApp.swift */,
 				61CE164329F8BFAE00557510 /* ContentView.swift */,
 				61CE164529F8BFB000557510 /* Assets.xcassets */,
+				61CE166B29FC0DD000557510 /* coffe-1354786__340.jpg */,
 				61CE164729F8BFB000557510 /* Preview Content */,
+				61CE166D29FC1E7400557510 /* Coffee.swift */,
+				61CE166F29FC1E8200557510 /* CoffeeProvider.swift */,
 			);
 			path = CoffeeInfoProvider;
 			sourceTree = "<group>";
@@ -232,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61CE164929F8BFB000557510 /* Preview Assets.xcassets in Resources */,
+				61CE166C29FC0DD100557510 /* coffe-1354786__340.jpg in Resources */,
 				61CE164629F8BFB000557510 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +269,8 @@
 			files = (
 				61CE164429F8BFAE00557510 /* ContentView.swift in Sources */,
 				61CE164229F8BFAE00557510 /* CoffeeInfoProviderApp.swift in Sources */,
+				61CE167029FC1E8200557510 /* CoffeeProvider.swift in Sources */,
+				61CE166E29FC1E7400557510 /* Coffee.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
