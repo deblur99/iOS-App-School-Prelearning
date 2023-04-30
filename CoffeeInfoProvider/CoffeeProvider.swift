@@ -29,6 +29,10 @@ class CoffeeProvider: ObservableObject {
         coffees.append(Coffee(name: name, imageURL: imageURL, description: description, isFavourite: false))
     }
     
+    func updateCoffeeItem(coffee: Coffee) {
+        coffees[coffees.firstIndex(of: coffee)!] = coffee
+    }
+    
     func getCoffeeItems() -> [Coffee] {
         return coffees
     }

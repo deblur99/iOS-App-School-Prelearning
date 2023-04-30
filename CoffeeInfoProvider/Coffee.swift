@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Coffee: Hashable {
+struct Coffee: Equatable {
     var UID: UUID = UUID()
     var name: String            // 이름
     var imageURL: String
