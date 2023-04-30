@@ -6,7 +6,7 @@
 //
 
 /*
- TO DOs
+ *** TO DOs ***
  1. Model, ViewModel 구현 (완료. 이제 View에 적용하면 됨)
  2. View도 Model, ViewModel 연동하기 (완료)
  
@@ -18,19 +18,30 @@
     
  4. CoffeePreview 화면에서 name, description 부분에 prefix 적용하기 (완료)
  
- 5. 검색 기능 추가
+ 5. 검색 기능 추가 (완료)
     - 검색바 추가하기 (최상단으로 올리면 나오는 거)
     - 검색 기능 구현하기
         - name, description 두 가지 항목으로 탐색
  
- 6. 즐겨찾기 기능 추가
+ 6. 즐겨찾기 기능 추가 (완료)
     - Model에 즐겨찾기 여부 bool 변수 추가
-    - preview에서 왼쪽 -> 오른쪽 쓸었을 때 즐겨찾기 버튼 노출 -> 활성화, 비활성화
     - 즐겨찾기된 항목은 name 바로 옆에 즐겨찾기 아이콘이 뜬다.
-    - 즐겨찾기한 항목이 상대적으로 위에 노출된다.
+    - 즐겨찾기한 항목이 상대적으로 위에 노출된다. (sorting)
     - 즐겨찾기한 항목만 볼 수 있도록 하단바를 제공한다.
  
  7. (시간 남으면) API 서버 만들어서 연동하기 -> 시간상 생략
+ 
+ *** 남겨진 이슈 ***
+ 1. CoffeeUpdateView에서 뒤로가기하여 CoffeeDetail로 돌아갈 때,
+    TextField에서 입력했던 값이 CoffeeDetail에도 적용되어 있다.
+    ContentView로 나가면 변경사항 반영되지 않는 상태로 돌아간다.
+ 
+    -> 최종 반영하려면, CoffeeUpdateView에서 하단의 Update new coffee item!!을 누르면 된다.
+ 
+ 2. 커피 사진 같은 경우는 고정된 이미지 하나로 통일하였다.
+    별도의 이미지 크롤링 서버를 구축하고 API를 만들어서 연동하면
+    커피 이름에 맞는 커피 사진을 가져와서 보여주는 그림을 생각하고 있는데
+    이 또한 시간 관계상 생략하였다.
  
  */
 
@@ -39,7 +50,14 @@ import SwiftUI
 struct ContentView: View {
     // 주는 쪽에서는 @State 변수 앞에 $를 붙여서 @Binding 변수 형태로 넘긴다.
     // 주는 쪽 -> State, 받는 쪽 -> Binding
-    @StateObject var coffeeProvider = CoffeeProvider()
+    
+    // 여러 뷰에 걸쳐 사용하는 ViewModel은 @ObservedObject 속성 래퍼를 사용해야 한다.
+    //     -> 이때, ViewModel는 ObservableObject 프로토콜이 적용되어 있어야 한다.
+    // 상위 뷰에서 ViewModel 객체를 넘겨받는 식으로 구현해야 화면 간 연동이 된다.
+    @ObservedObject var coffeeProvider: CoffeeProvider
+    
+    // 검색어
+    @State private var searchText = ""
     
     var body: some View {
         NavigationStack {
@@ -54,7 +72,7 @@ struct ContentView: View {
                 }
                 
                 Section("Coffees") {
-                    ForEach(coffeeProvider.coffees, id: \.UID) {
+                    ForEach(searchResults.sorted { $0.isFavourite && !$1.isFavourite }, id: \.UID) {
                         coffee in
                         NavigationLink {
                             CoffeeDetail(coffee: coffee, coffeeList: $coffeeProvider.coffees)
@@ -63,204 +81,25 @@ struct ContentView: View {
                         }
                     }
                     .onDelete(perform: deleteItems)
-                    // 이 부분을 추가하여 오른쪽 -> 왼쪽 제스처 활성화
-                    // Delete를 누르면, deleteItems에 현재 인덱스가 같이 포함되어 실행되고, 그 결과 Binding으로 연동되어 있는 coffeeList에 해당 인덱스의 요소가 삭제되며 row도 삭제된다.
                 }
             }
             .navigationTitle("Coffee Info Provider")
+        }
+        .searchable(text: $searchText)
+    }
+    
+    var searchResults: [Coffee] {
+        if searchText.isEmpty {
+            return coffeeProvider.coffees
+        } else {
+            return coffeeProvider.coffees.filter { coffee in
+                coffee.name.contains(searchText)
+                    || coffee.description.contains(searchText)
+            }
         }
     }
     
     func deleteItems(at offsets: IndexSet) {
         coffeeProvider.coffees.remove(atOffsets: offsets)
-    }
-}
-
-struct CoffeeRow: View {
-    let coffee: Coffee
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            // .prefix()의 반환형은 SubSequence임에 유의 -> String으로 다시 형변환해야 한다.
-            Text("\(String(coffee.name.prefix(20)))")
-                .fontWeight(.bold)
-        
-            HStack {
-                Text("\(String(coffee.description.prefix(100)))")
-                    .frame(
-                        maxWidth: 300,
-                        alignment: .topLeading)
-        
-                AsyncImage(url: URL(string: "https://cdn.pixabay.com/photo/2016/04/26/16/58/coffe-1354786__340.jpg")) {
-                    phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 60, maxHeight: 60)
-                    case .failure:
-                        Text("Image Not Found")
-                    }
-                }
-            }
-        }
-        .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 4))
-    }
-}
-
-// struct CoffeePreview: View {}
-
-struct CoffeeAddView: View {
-    @Binding var coffeeList: [Coffee]
-    
-    // 추가할 데이터의 항목
-    @State var newCoffeeName: String = ""
-    @State var newCoffeeDesc: String = ""
-    @State var newCoffeeLink: String = ""
-    
-    // for popping view
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    Text("Adding New Coffee!!")
-                        .fontWeight(.bold)
-                }
-                
-                Section {
-                    VStack {
-                        TextField("Enter the name of coffee", text: $newCoffeeName)
-                            .padding([.top, .bottom], 4)
-                        Divider()
-                        TextField("Enter the description of coffee", text: $newCoffeeDesc)
-                            .padding([.top, .bottom], 4)
-                        Divider()
-                        TextField("Enter the site link of coffee", text: $newCoffeeLink)
-                            .padding([.top, .bottom], 4)
-                    }
-                }
-                
-                Section {
-                    Button {
-                        coffeeList.append(Coffee(name: newCoffeeName, imageURL: newCoffeeLink, description: newCoffeeDesc, isFavourite: false))
-                        
-                        dismiss() // pop this view
-                        
-                    } label: {
-                        Text("Add new coffee item!!")
-                            .foregroundStyle(.blue)
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct CoffeeDetail: View {
-    @State var coffee: Coffee
-    @Binding var coffeeList: [Coffee] // for passing into CoffeeUpdateView
-    
-    var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    VStack(alignment: .leading) {
-                        Text("\(coffee.name)")
-                            .fontWeight(.bold)
-                        
-                        Divider()
-                        
-                        AsyncImage(url: URL(string: "https://cdn.pixabay.com/photo/2016/04/26/16/58/coffe-1354786__340.jpg")) {
-                            phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image.resizable()
-                                    .frame(maxHeight: 200)
-                            default:
-                                Text("Image Not Found")
-                            }
-                        }
-            
-                        Divider()
-            
-                        Text("\(coffee.description)")
-                    }
-                }
-                
-                // Updating this item
-                Section {
-                    NavigationLink {
-                        // 업데이트 화면으로 넘어가면서 인덱스도 같이 넘긴다
-                        CoffeeUpdateView(coffee: $coffee, coffeeList: $coffeeList)
-                    } label: {
-                        Text("Update this coffee info")
-                    }
-                }
-            
-                Section {
-                    Button {
-                        let url = URL(string: "https://en.wikipedia.org/wiki/\(coffee.name)")!
-                        UIApplication.shared.open(url)
-                    } label: {
-                        Text("Go to Wikipedia to look into it more")
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct CoffeeUpdateView: View {
-    @Binding var coffee: Coffee
-    @Binding var coffeeList: [Coffee]
-            
-    // for popping view
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        List {
-            Section {
-                Text("Update the coffee info!!")
-                    .fontWeight(.bold)
-            }
-            
-            Section("EDIT") {
-                VStack {
-                    TextField("\(coffee.name)", text: $coffee.name)
-                        .padding([.top, .bottom], 4)
-                    Divider()
-                    TextField("\(coffee.description)", text: $coffee.description)
-                        .padding([.top, .bottom], 4)
-                }
-            }
-            
-            Section {
-                Button {
-                    // 넘겨받은 인덱스 부분의 요소에 입력값 반영한 객체를 다시 할당한다.
-                    // 버튼을 눌러야 coffeeList 내부 요소의 상태가 바뀐다.
-                    if let index = coffeeList.firstIndex(where: { $0.UID == coffee.UID }) {
-                        coffeeList[index] = coffee
-                    }
-                    
-                    dismiss() // pop this view
-                    
-                } label: {
-                    Text("Update new coffee item!!")
-                        .foregroundStyle(.blue)
-                }
-            }
-        }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

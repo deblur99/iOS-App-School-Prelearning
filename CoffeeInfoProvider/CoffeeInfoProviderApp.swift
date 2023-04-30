@@ -11,7 +11,8 @@ import SwiftUI
 struct CoffeeInfoProviderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(CoffeeProvider())
         }
     }
 }

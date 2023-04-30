@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6101224F29FE6F1A00D731D3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101224E29FE6F1A00D731D3 /* MainView.swift */; };
+		6101225129FE6F8C00D731D3 /* CoffeeFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101225029FE6F8C00D731D3 /* CoffeeFavoritesView.swift */; };
+		6101225329FE6FA000D731D3 /* CoffeeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101225229FE6FA000D731D3 /* CoffeeRow.swift */; };
+		6101225529FE6FAF00D731D3 /* CoffeeAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101225429FE6FAF00D731D3 /* CoffeeAddView.swift */; };
+		6101225729FE6FBE00D731D3 /* CoffeeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101225629FE6FBE00D731D3 /* CoffeeDetail.swift */; };
+		6101225929FE6FD100D731D3 /* CoffeeUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101225829FE6FD100D731D3 /* CoffeeUpdateView.swift */; };
 		61CE164229F8BFAE00557510 /* CoffeeInfoProviderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE164129F8BFAE00557510 /* CoffeeInfoProviderApp.swift */; };
 		61CE164429F8BFAE00557510 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE164329F8BFAE00557510 /* ContentView.swift */; };
 		61CE164629F8BFB000557510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61CE164529F8BFB000557510 /* Assets.xcassets */; };
@@ -37,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6101224E29FE6F1A00D731D3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		6101225029FE6F8C00D731D3 /* CoffeeFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeFavoritesView.swift; sourceTree = "<group>"; };
+		6101225229FE6FA000D731D3 /* CoffeeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeRow.swift; sourceTree = "<group>"; };
+		6101225429FE6FAF00D731D3 /* CoffeeAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeAddView.swift; sourceTree = "<group>"; };
+		6101225629FE6FBE00D731D3 /* CoffeeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeDetail.swift; sourceTree = "<group>"; };
+		6101225829FE6FD100D731D3 /* CoffeeUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeUpdateView.swift; sourceTree = "<group>"; };
 		61CE163E29F8BFAE00557510 /* CoffeeInfoProvider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoffeeInfoProvider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61CE164129F8BFAE00557510 /* CoffeeInfoProviderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeInfoProviderApp.swift; sourceTree = "<group>"; };
 		61CE164329F8BFAE00557510 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +119,12 @@
 				61CE164729F8BFB000557510 /* Preview Content */,
 				61CE166D29FC1E7400557510 /* Coffee.swift */,
 				61CE166F29FC1E8200557510 /* CoffeeProvider.swift */,
+				6101224E29FE6F1A00D731D3 /* MainView.swift */,
+				6101225029FE6F8C00D731D3 /* CoffeeFavoritesView.swift */,
+				6101225229FE6FA000D731D3 /* CoffeeRow.swift */,
+				6101225429FE6FAF00D731D3 /* CoffeeAddView.swift */,
+				6101225629FE6FBE00D731D3 /* CoffeeDetail.swift */,
+				6101225829FE6FD100D731D3 /* CoffeeUpdateView.swift */,
 			);
 			path = CoffeeInfoProvider;
 			sourceTree = "<group>";
@@ -268,9 +286,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				61CE164429F8BFAE00557510 /* ContentView.swift in Sources */,
+				6101225329FE6FA000D731D3 /* CoffeeRow.swift in Sources */,
+				6101225529FE6FAF00D731D3 /* CoffeeAddView.swift in Sources */,
 				61CE164229F8BFAE00557510 /* CoffeeInfoProviderApp.swift in Sources */,
+				6101225129FE6F8C00D731D3 /* CoffeeFavoritesView.swift in Sources */,
 				61CE167029FC1E8200557510 /* CoffeeProvider.swift in Sources */,
+				6101225729FE6FBE00D731D3 /* CoffeeDetail.swift in Sources */,
+				6101224F29FE6F1A00D731D3 /* MainView.swift in Sources */,
 				61CE166E29FC1E7400557510 /* Coffee.swift in Sources */,
+				6101225929FE6FD100D731D3 /* CoffeeUpdateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
